@@ -26,7 +26,7 @@ var regViewBox = /^0\s0\s([\-+]?\d*\.?\d+([eE][\-+]?\d+)?)\s([\-+]?\d*\.?\d+([eE
  *
  * @author Kir Belevich
  */
-exports.fn = function(item, params) {
+exports.fn = function (item, params) {
 
     if (
         item.isElem('svg') &&
@@ -37,12 +37,14 @@ exports.fn = function(item, params) {
 
         var match = item.attr('viewBox').value.match(regViewBox);
 
-        if (match) {
-            item.attr('width').value = params.width;
-            item.attr('height').value = params.height;
-            var x = (params.width - match[1]) / 2;
-            var y = (params.height - match[3]) / 2;
-            item.attr('viewBox').value = '' + (0 - x) + ' ' + (0 - y) + ' ' + params.width + ' ' + params.height;
+        if (item.attr('width').value < params.width && item.attr('height').value < params.height) {
+            if (match) {
+                item.attr('width').value = params.width;
+                item.attr('height').value = params.height;
+                var x = (params.width - match[1]) / 2;
+                var y = (params.height - match[3]) / 2;
+                item.attr('viewBox').value = '' + (0 - x) + ' ' + (0 - y) + ' ' + params.width + ' ' + params.height;
+            }
         }
 
     }
